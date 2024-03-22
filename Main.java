@@ -1,9 +1,65 @@
 import java.util.*;
 
+class Mahasiswa {
+    String nim;
+    String nama;
+    Map<String, Integer> nilaiAngkaMap;
+
+    public Mahasiswa() {
+        nilaiAngkaMap = new HashMap<>();
+    }
+
+    public void setNim(String nim) {
+        this.nim = nim;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public String getNim() {
+        return nim;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
+    public void tambahNilai(String kode, int nilaiAngka) {
+        nilaiAngkaMap.put(kode, nilaiAngka);
+    }
+
+    public Map<String, Integer> getNilaiAngkaMap() {
+        return nilaiAngkaMap;
+    }
+}
+
+class MataKuliah {
+    String kode;
+    String nama;
+
+    public void setKode(String kode) {
+        this.kode = kode;
+    }
+
+    public void setNama(String nama) {
+        this.nama = nama;
+    }
+
+    public String getKode() {
+        return kode;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+}
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
+        // Input data Mahasiswa
         Mahasiswa mahasiswa = new Mahasiswa();
         System.out.println("Menyimpan KHS");
         System.out.println("Mahasiswa");
@@ -33,24 +89,21 @@ public class Main {
         // Input nilai angka Mata Kuliah
         for (MataKuliah mataKuliah : mataKuliahs) {
             System.out.println("\nMasukkan Nilai Angka Mata Kuliah " + mataKuliah.getNama() + ":");
-            mahasiswa.tambahNilai(mataKuliah.getKode(), Integer.parseInt(scanner.nextLine()));
+            int nilaiAngka = Integer.parseInt(scanner.nextLine());
+            mahasiswa.tambahNilai(mataKuliah.getKode(), nilaiAngka);
         }
-
-        // Membuat objek KHS
-        KHS khs = new KHS();
-        khs.setMahasiswa(mahasiswa);
 
         scanner.close();
 
         // Mencetak KHS
         System.out.println("\nKHS Mahasiswa");
-        System.out.println("NIM: " + khs.getMahasiswa().getNim());
-        System.out.println("Nama: " + khs.getMahasiswa().getNama());
+        System.out.println("NIM: " + mahasiswa.getNim());
+        System.out.println("Nama: " + mahasiswa.getNama());
         System.out.println("Mata Kuliah:");
         for (MataKuliah mataKuliah : mataKuliahs) {
             System.out.println("Kode: " + mataKuliah.getKode());
             System.out.println("Nama: " + mataKuliah.getNama());
-            int nilaiAngka = khs.getMahasiswa().getNilaiAngkaMap().get(mataKuliah.getKode());
+            int nilaiAngka = mahasiswa.getNilaiAngkaMap().get(mataKuliah.getKode());
             String nilaiHuruf = konversiNilaiAngkaKeHuruf(nilaiAngka);
             System.out.println("Nilai Huruf: " + nilaiHuruf);
             System.out.println();
